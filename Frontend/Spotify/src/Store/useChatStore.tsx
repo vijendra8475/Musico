@@ -17,7 +17,9 @@ export const useChatStore = create<ChatStore>(set => ({
         set({ isLoading: true, error: null });
         try {
             const response = await axiosInstance.get('/users'); // Adjust the API endpoint as needed
-            set({ users: response.data });
+            console.log('Fetched users:', response.data);
+            
+            set({ users: response.data.users });
         } catch (error: any) {
             set({ error: error.message, isLoading: false });
         }

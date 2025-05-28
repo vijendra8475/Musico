@@ -23,7 +23,7 @@ const AlbumPage = () => {
 
   return (
     <div className="h-full">
-      <ScrollArea className="h-full">
+      <ScrollArea className="h-full rounded-md overflow-hidden">
         
         {/* main-content */}
 

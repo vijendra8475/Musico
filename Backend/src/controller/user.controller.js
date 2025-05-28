@@ -7,21 +7,10 @@ export const getAllUsers = async (req, res) => {
         const currentUser = req.auth.userId;
 
         // Check if the user is an admin
-        const users = await User.find({ clerkId : { $ne : currentUser}});
-
-        // check if there is any user in the database
-        if (!users) {
-            console.log('No users found')
-            return res.status(404).json({
-                message: 'No users found',
-            });
-        }
+        const users = await User.find({ clerkId: { $ne: currentUser } });
 
         // send the response with the users
-        res.status(200).json({
-            message: 'Users fetched successfully',
-            data: users,
-        });
+        res.status(200).json({users});
 
     } catch (error) {
         next(error);

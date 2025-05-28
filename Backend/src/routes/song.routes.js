@@ -8,7 +8,7 @@ router.get("/", protectRoute, requireAdmin, getAllSongs);
 
 router.get('/featured', protectRoute, requireAdmin, getFeaturedSong);
 router.get('/made-for-you', protectRoute, requireAdmin, getMadeForYou);
-router.get('/trendding', protectRoute, requireAdmin, getTrendingSongs);
+router.get('/trending', protectRoute, requireAdmin, getTrendingSongs);
 
 
 export default router;

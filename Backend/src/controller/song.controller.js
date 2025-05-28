@@ -49,7 +49,7 @@ export const getFeaturedSong = async (req, res, next) => {
 export const getMadeForYou = async (req, res, next) => {
     try {
         // Fetch 4 songs from the database
-        const featuredSongs = await Song.aggregate([
+        const madeForYou = await Song.aggregate([
             {
                 $sample : { size : 4},
             },
@@ -64,7 +64,7 @@ export const getMadeForYou = async (req, res, next) => {
             }
         ])
 
-        res.status(200).json(songs);
+        res.status(200).json(madeForYou);
         
     } catch (error) {
         console.error("Error fetching featured song:", error);
@@ -92,7 +92,7 @@ export const getTrendingSongs = async (req, res, next) => {
             }
         ])
 
-        res.status(200).json(songs);
+        res.status(200).json(trenddingSongs);
         
     } catch (error) {
         console.error("Error fetching featured song:", error);
