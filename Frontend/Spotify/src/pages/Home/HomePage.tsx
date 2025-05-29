@@ -1,9 +1,13 @@
 import Topbar from "@/components/Topbar"
 import { useMusicStore } from "@/Store/useMusicStore";
 import { useEffect } from "react";
+import FeaturedSection from "./components/FeatureSection";
+import MadeForYouSection from "./components/madeForYouSection";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import TrendingSection from "./components/TrendingSection";
 
 const HomePage = () => {
-  const { isLoading, featuredSongs, madeForYouSongs, trendingSongs, fetchMadeForYouSongs, fetchTrendingSongs, fetchFeaturedSongs } = useMusicStore();
+  const { featuredSongs, madeForYouSongs, trendingSongs, fetchMadeForYouSongs, fetchTrendingSongs, fetchFeaturedSongs } = useMusicStore();
 
 
   useEffect(() => {
@@ -19,9 +23,17 @@ const HomePage = () => {
   
 
   return (
-    <div className="rounded-md overflow-hidden">
+    <main className="rounded-md bg-gradient-to-b from-zinc-800 to-zinc-900 text-white ">
       <Topbar />
-    </div>
+      <ScrollArea className=" p-4">
+        <div className="p-4 sm:p-6">
+          <h1 className="text-3xl font-semibold mb-6">Welcome to Musico</h1>
+          <FeaturedSection />
+          <MadeForYouSection />
+          <TrendingSection />
+        </div>
+      </ScrollArea>
+    </main>
   )
 }
 

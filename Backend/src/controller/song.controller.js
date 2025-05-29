@@ -51,7 +51,7 @@ export const getMadeForYou = async (req, res, next) => {
         // Fetch 4 songs from the database
         const madeForYou = await Song.aggregate([
             {
-                $sample : { size : 4},
+                $sample : { size : 6},
             },
             {
                 $project : {
@@ -79,7 +79,7 @@ export const getTrendingSongs = async (req, res, next) => {
         // Fetch 4 songs from the database
         const trenddingSongs = await Song.aggregate([
             {
-                $sample : { size : 4},
+                $sample : { size : 5},
             },
             {
                 $project : {

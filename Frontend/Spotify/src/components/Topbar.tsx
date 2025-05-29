@@ -9,7 +9,7 @@ import { buttonVariants } from './ui/button';
 const Topbar = () => {
     let { isAdmin } = useAuthStore();
   return (
-    <div className='flex justify-between items-center bg-zinc-900 p-4 text-white'>
+    <div className='flex justify-between items-center bg-zinc-900 p-4 text-white rounded-md'>
         <div className="flex items-center justify-center gap-2">
             <img src='icon.png' className='size-10' />
             Musico
