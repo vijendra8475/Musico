@@ -2,7 +2,7 @@ import Topbar from "@/components/Topbar"
 import { useMusicStore } from "@/Store/useMusicStore";
 import { useEffect } from "react";
 import FeaturedSection from "./components/FeatureSection";
-import MadeForYouSection from "./components/madeForYouSection";
+import MadeForYouSection from "./components/MadeForYouSection";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import TrendingSection from "./components/TrendingSection";
 
