@@ -1,5 +1,6 @@
 import TrendingSectionSkeleton from "@/components/skeletons/TrendingSectionSkeleton"
 import { useMusicStore } from "@/Store/useMusicStore";
+import PlayButton from "../PlayButton";
 
 const TrendingSection = () => {
     const { trendingSongs, isLoading, error } = useMusicStore();
@@ -33,6 +34,8 @@ const TrendingSection = () => {
                         <h3 className="font-bold text-white truncate">{song.title}</h3>
                         <p className="text-gray-400 text-sm mt-1 truncate">{song.artist}</p>
                         <div className="absolute top-0 left-0 w-full h-full bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                        <PlayButton song={song} queue={trendingSongs} />
+                        
                     </div>
                 ))}
             </div>
