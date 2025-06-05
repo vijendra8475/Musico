@@ -12,7 +12,7 @@ router.get('/check', checkAdmin);
 router.post("/song", createSong);
 router.delete("/song/:id", deleteSong);
 
-router.post("/albums", createAlbum);
+router.post("/album", createAlbum);
 router.delete("/album/:id", deleteAlbum);
 
 export default router;

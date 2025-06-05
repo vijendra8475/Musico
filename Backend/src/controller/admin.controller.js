@@ -93,13 +93,13 @@ export const deleteSong = async (req, res, next) => {
 
 export const createAlbum = async (req, res, next) => {
     try {
-        const { artist, title, releaseDate } = req.body;
+        const { artist, title, releaseYear } = req.body;
         const { imageFile } = req.files;
 
         const album = new Album({
             artist,
             title,
-            releaseDate,
+            releaseYear,
             imageUrl: await uploadToCloudinary(imageFile),
         })
 
