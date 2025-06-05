@@ -18,7 +18,7 @@ export const AdminPage = () => {
         fetchSongs();
         fetchAlbum();
         fetchStats()
-    }, [])
+    }, [fetchAlbum,fetchSongs,fetchStats])
 
 
     if (!isLoading && !isAdmin) return <div>Access Denied</div>;

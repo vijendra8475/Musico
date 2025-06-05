@@ -1,19 +1,20 @@
 import { Song } from '../models/song.model.js'
 import { Album } from  '../models/album.model.js'
-import cloudinary from 'cloudinary'
+import cloudinary from '../lib/cloudinary.js';
+
 
 
 const uploadToCloudinary = async (file) => {
-    try {
-        const result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
-            resource_type: 'auto',
-        })
-        return result.secure_url
-    } catch (error) {
-        console.error('Error uploading to Cloudinary', error)
-        throw new Error('Error uploading file to Cloudinary');
-    }
-}
+	try {
+		const result = await cloudinary.uploader.upload(file.tempFilePath, {
+			resource_type: "auto",
+		});
+		return result.secure_url;
+	} catch (error) {
+		console.log("Error in uploadToCloudinary", error);
+		throw new Error("Error uploading to cloudinary");
+	}
+};
 
 
 export const  createSong = async (req, res, next) => {
@@ -40,9 +41,15 @@ export const  createSong = async (req, res, next) => {
         await song.save();
 
         if(albumId) {
-            await Album.findByIdandUpdate(albumId, {
+            const album = await Album.findById(albumId);
+            console.log(album);
+            
+            if (!album) {
+                return res.status(404).json({ message: 'Album not found' });
+            }
+            await Album.findByIdAndUpdate(albumId, {
                 $push : {
-                    song : song._id
+                    songs : song._id
                 }
             })
         }

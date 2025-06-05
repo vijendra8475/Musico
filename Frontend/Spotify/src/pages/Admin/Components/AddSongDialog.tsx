@@ -2,20 +2,29 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { axiosInstance } from "@/lib/axios"
 import { useMusicStore } from "@/Store/useMusicStore"
 import { Plus, Upload } from "lucide-react"
 import { useRef, useState } from "react"
+import toast from "react-hot-toast"
+
+interface NewSong{
+    artist : string,
+    title : string,
+    album : string,
+    duration : string
+}
 
 export const AddSongDialog = () => {
     const { albums } = useMusicStore()
     const [isLoading, setIsLoading] = useState(false)
     const [songDialogOpen, setSongDialogOpen] = useState(false)
 
-    const [newSong, setNewSong] = useState({
+    const [newSong, setNewSong] = useState<NewSong>({
         title: '',
         artist: '',
         album: '',
-        duration: 0
+        duration: '0'
     })
 
     const audioInputRef = useRef<HTMLInputElement>(null);
@@ -26,9 +35,50 @@ export const AddSongDialog = () => {
         image: null
     })
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        console.log(newSong);
+        
+        setIsLoading(true)
 
+        try {
+            if(!files.audio || !files.image) {
+                toast.error('Upload both audio and video file')
+            }
+            const formData = new FormData()
+
+            formData.append('title', newSong.title)
+            formData.append('artist', newSong.artist)
+            formData.append('duration', newSong.duration)
+            
+            if(newSong.album && newSong.album !== 'none') {
+                formData.append('albumId', newSong.album)
+            }
+
+            formData.append('imageFile', files.image)
+            formData.append('audioFile' ,files.audio)
+
+            await axiosInstance.post('/admin/song', formData, {
+                headers : {
+                    'Content-Type' : 'multipart/form-data'
+                }
+            })
+
+            setNewSong({
+                artist : '',
+                title : '',
+                duration :'',
+                album : ''
+            })
+
+            toast.success('Song Added Sucessfully');
+        } catch (error : any) {
+            toast.error('Failed to Add Song ' + error.message)
+        }
+        finally{
+            setIsLoading(false)
+        }
     }
+
     return (
         <Dialog open={songDialogOpen} onOpenChange={setSongDialogOpen}>
             <DialogTrigger asChild>
@@ -90,7 +140,7 @@ export const AddSongDialog = () => {
                         <label className='text-sm font-medium'>Audio File</label>
                         <div className='flex items-center gap-2'>
                             <Button variant='outline' onClick={() => audioInputRef.current?.click()} className='w-full'>
-                                {files.audio ? files.audio.name.slice(0, 20) : "Choose Audio File"}
+                                {files.audio ? files.audio.name.slice(0) : "Choose Audio File"}
                             </Button>
                         </div>
                     </div>
@@ -103,14 +153,14 @@ export const AddSongDialog = () => {
                     </div>
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Title</label>
-                        <Input value={newSong.artist}
+                        <Input value={newSong.title}
                             onChange={e => setNewSong({ ...newSong, title: e.target.value })}
                         />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-sm font-medium">Duration</label>
-                        <Input value={newSong.artist}
-                            onChange={e => setNewSong({ ...newSong, duration: parseInt(e.target.value) || 0 })}
+                        <label className="text-sm font-medium">Duration (in seconds)</label>
+                        <Input value={newSong.duration}
+                            onChange={e => setNewSong({ ...newSong, duration: e.target.value || '0' })}
                         />
                     </div>
                     <div className='space-y-2'>

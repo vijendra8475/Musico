@@ -4,14 +4,11 @@ import { useAuth } from "@clerk/clerk-react";
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react"
 
-const UpdateApiToke = (token: string | null) => {
-    if(token) {
-        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    }
-    else {
-        delete axiosInstance.defaults.headers.common['Authorization']
-    }
-}
+const updateApiToken = (token: string | null) => {
+    // console.log(token);
+    
+	axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+};
 
 export const AuthProvider = ({children} : { children : React.ReactNode}) => {
     const { getToken } = useAuth()
@@ -22,7 +19,7 @@ export const AuthProvider = ({children} : { children : React.ReactNode}) => {
       const initAuth = async () => {
         try {
             const token = await getToken();
-            UpdateApiToke(token);
+            updateApiToken(token);
             if(token) {
                 await checkAdminStatus();
             }

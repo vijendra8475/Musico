@@ -1,6 +1,8 @@
 import { clerkClient } from "@clerk/express";
 
 export const protectRoute = async (req, res, next) => {
+    console.log(req.auth);
+    
     if(!req.auth.userId) {
         console.log('Unauthorized access attempt from auth.middleware.js');
         
