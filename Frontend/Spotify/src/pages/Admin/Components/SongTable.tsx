@@ -12,7 +12,7 @@ import {
 import { Calendar, Trash2 } from 'lucide-react';
 
 export const SongTable = () => {
-    const { isLoading, songs } = useMusicStore();
+    const { isLoading, songs, deleteSong } = useMusicStore();
 
     if (isLoading) return <div className="w-full h-full flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-500"></div>
@@ -33,7 +33,7 @@ export const SongTable = () => {
             <TableBody>
                 {
                     songs.map(song => (
-                        <TableRow>
+                        <TableRow key={song._id}>
                             <TableCell>
                                 <img src={song.imageUrl} alt={song.title} className='size-10 rounded object-cover ' />
                             </TableCell>
@@ -52,6 +52,7 @@ export const SongTable = () => {
                                         variant={'ghost'}
                                         size={'sm'}
                                         className='text-red-400 hover:bg-zinc-400/10 hover:text-red-300'
+                                        onClick={() => deleteSong(song._id)}
                                     >
                                         <Trash2 className='size-4' />
                                     </Button>

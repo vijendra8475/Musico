@@ -15,11 +15,7 @@ const HomePage = () => {
    fetchMadeForYouSongs(),
    fetchTrendingSongs()
   }, [fetchFeaturedSongs, fetchMadeForYouSongs, fetchTrendingSongs]);
-
-  console.log("Featured Songs:", featuredSongs);
-  console.log("Made For You Songs:", madeForYouSongs);
-  console.log("Trending Songs:", trendingSongs);
-  
+ 
   
 
   return (

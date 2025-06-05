@@ -40,7 +40,8 @@ export const getFeaturedSong = async (req, res, next) => {
         res.status(200).json(featuredSongs);
         
     } catch (error) {
-        console.error("Error fetching featured song:", error);
+        console.log('Error in featured Songs' , error);
+        
         next(error);
         
     }

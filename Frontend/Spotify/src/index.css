@@ -201,3 +201,7 @@
 }
 
 
+
+::-webkit-scrollbar{
+  display: none;
+}

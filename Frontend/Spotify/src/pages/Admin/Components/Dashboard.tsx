@@ -3,9 +3,7 @@ import { Library, ListMusic, PlayCircle, Users2 } from 'lucide-react';
 import { StatsCard } from './StatsCard';
 
 export const Dashboard = () => {
-  const { stats } = useMusicStore();
-  console.log(stats);
-  
+  const { stats } = useMusicStore();  
 
   const statsData = [
 	{
