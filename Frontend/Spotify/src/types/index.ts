@@ -25,3 +25,19 @@ export interface Stats {
     totalAlbums : number,
     totalUsers : number
 }
+
+export interface Message {
+    _id : string,
+    receiverId : string,
+    senderId : string,
+    content : string,
+    createdAt : string,
+    updatedAt : string
+}
+
+export interface User {
+    _id : string,
+    clerkId : string,
+    imageUrl : string,
+    name : string
+}
