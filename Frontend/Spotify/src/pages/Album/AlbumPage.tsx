@@ -22,11 +22,9 @@ const AlbumPage = () => {
   }, [fetchAlbumById, albumId]);
 
   const handlePlaySong = (index: number) => {
-    console.log(currentAlbum, index);
 
     if (!currentAlbum) return;
     playAlbum(currentAlbum.songs, index);
-    console.log(currentSong, playAlbum);
   };
 
   const isCurrentAlbumPlaying = currentAlbum?.songs.some(

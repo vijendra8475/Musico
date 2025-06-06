@@ -5,6 +5,7 @@ import { clerkMiddleware } from '@clerk/express'
 import fileupload from 'express-fileupload';
 import path from 'path'
 import cors from 'cors'
+import { initilizeSocket } from './lib/socket.js';
 
 import userRoutes from './routes/user.routes.js';
 import authRoutes from './routes/auth.routes.js';
@@ -12,6 +13,7 @@ import adminRoutes from './routes/admin.routes.js';
 import songRoutes from './routes/song.routes.js';
 import albumRoutes from './routes/album.routes.js';
 import statsRoutes from './routes/stats.routes.js';
+import { createServer } from 'http';
 
 dotenv.config();
 
@@ -24,6 +26,9 @@ const __dirName = path.resolve();
 app.use(express.json());
 const PORT = process.env.PORT;
 
+
+const httpServer = createServer(app)
+initilizeSocket(httpServer)
 
 app.use(clerkMiddleware()); // This will addauth to request object => req.auth
 app.use(fileupload({
@@ -49,7 +54,7 @@ app.use((err, req, res, next) => {
     });
 })
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
     console.log('Server is running on port ' + PORT);
     connectDB();
     console.log(`Server is running on http://localhost:${PORT}`);
