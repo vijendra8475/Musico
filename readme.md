@@ -1,189 +1,118 @@
-# Spotify Clone – Full Stack Application
+# 🎵 Spotify Clone – Full Stack Application
 
-## Overview
+<div align="center">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" />
+</div>
 
-This project is a full-stack Spotify-like application with a React + TypeScript + Vite frontend and a Node.js + Express + MongoDB backend. It supports user authentication (via Clerk), music streaming, album and song management, and real-time chat features.
+## 🎯 Overview
 
----
+A modern full-stack music streaming platform built with React, TypeScript, Node.js, and MongoDB. Features include:
 
-## File Structure
+- 🔐 User authentication via Clerk
+- 🎵 Music streaming
+- 💿 Album management
+- ☁️ Cloudinary file uploads
+- 💬 Real-time chat (Socket.io)
+
+## 📁 File Structure
+
+<details>
+<summary>Click to expand</summary>
 
 ```
 .
 ├── Backend/
-│   ├── package.json
 │   └── src/
-│       ├── .env
-│       ├── index.js
 │       ├── controller/
 │       ├── lib/
 │       ├── middleware/
 │       ├── models/
 │       ├── routes/
-│       └── seeds/
+│       ├── seeds/
+│       └── temp/
 └── Frontend/
     └── Spotify/
-        ├── .env
-        ├── package.json
-        ├── index.html
-        ├── vite.config.ts
-        ├── tsconfig*.json
         ├── public/
         └── src/
 ```
+</details>
 
----
-
-## How the Application Works
-
-- **Frontend**: Built with React, TypeScript, Vite, and Tailwind CSS. Handles user authentication, music browsing, playback, and chat UI.
-- **Backend**: Node.js/Express REST API with MongoDB for data storage. Handles authentication, CRUD for songs/albums, user management, and statistics.
-- **Authentication**: Uses Clerk for secure user authentication and admin checks.
-- **Media Storage**: Uses Cloudinary for storing song and album images/audio files.
-- **Real-time Features**: (Planned) Socket.io for chat and live updates.
-
----
-
-## Environment Variables
-
-### Backend (`Backend/src/.env`)
-
-- `PORT`: Port for backend server (e.g., 5000)
-- `MONGODB_URI`: MongoDB connection string
-- `Admin_Email`: Email address for admin user
-- `CLOUDNIARY_NAME`, `CLOUDNIARY_API_KEY`, `CLOUDNIARY_API_SECRET`: Cloudinary credentials
-- `NODE_ENV`: Environment (development/production)
-- `CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`: Clerk authentication keys
-
-### Frontend (`Frontend/Spotify/.env`)
-
-- `VITE_CLERK_PUBLISHABLE_KEY`: Clerk publishable key for frontend authentication
-
----
-
-## Dependencies
-
-### Backend
-
-- express
-- mongoose
-- dotenv
-- cors
-- express-fileupload
-- cloudinary
-- @clerk/express
-- socket.io
+## 🛠️ Tech Stack
 
 ### Frontend
+- ⚛️ React + TypeScript
+- 🎨 Tailwind CSS
+- 🔄 Zustand (State Management)
+- 🌐 Axios
+- 🎭 Radix UI
 
-- react, react-dom
-- typescript
-- vite
-- tailwindcss, tw-animate-css
-- @clerk/clerk-react
-- @radix-ui/react-*
-- axios
-- zustand
-- class-variance-authority, clsx, tailwind-merge
-- lucide-react
-- react-router-dom
+### Backend
+- 📡 Node.js/Express
+- 🗄️ MongoDB
+- ☁️ Cloudinary
+- 🔐 Clerk Auth
+- 🔄 Socket.io
 
----
+## ⚙️ Environment Setup
 
-## API Routes
+<details>
+<summary>Backend Environment Variables</summary>
 
-### Auth
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_uri
+CLOUDNIARY_NAME=your_cloudinary_name
+CLERK_SECRET_KEY=your_clerk_secret
+```
+</details>
 
-- `POST /api/auth/callback`  
-  Syncs Clerk user to backend DB.  
-  **Body:** `{ id, firstName, lastName, imageUrl }`
+<details>
+<summary>Frontend Environment Variables</summary>
 
-### User
+```env
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_key
+```
+</details>
 
-- `GET /api/users`  
-  Returns all users except the current user.  
-  **Auth:** Required
+## 🚀 API Routes
 
-### Admin
+### 🔐 Authentication
+- `POST /api/auth/callback` - Sync Clerk user
 
-- `GET /api/admin/check`  
-  Checks if current user is admin.  
-  **Auth:** Admin only
+### 👥 User Management
+- `GET /api/users` - List all users
 
-- `POST /api/admin/songs`  
-  Create a new song (with file upload).  
-  **Auth:** Admin only
+### 👑 Admin Routes
+- `GET /api/admin/check` - Admin verification
+- `POST /api/admin/songs` - Create song
+- `POST /api/admin/albums` - Create album
 
-- `DELETE /api/admin/songs/:id`  
-  Delete a song by ID.  
-  **Auth:** Admin only
+### 🎵 Music
+- `GET /api/song/featured` - Get featured songs
+- `GET /api/song/trendding` - Get trending songs
+- `GET /api/album/:albumId` - Get album details
 
-- `POST /api/admin/albums`  
-  Create a new album (with file upload).  
-  **Auth:** Admin only
+## 🚀 Quick Start
 
-- `DELETE /api/admin/albums/:id`  
-  Delete an album and its songs.  
-  **Auth:** Admin only
+```bash
+# Backend Setup
+cd Backend
+npm install
+npm run seed:song   # Optional
 
-### Song
+# Frontend Setup
+cd Frontend/Spotify
+npm install
+npm run dev
+```
 
-- `GET /api/song/`  
-  Get all songs.  
-  **Auth:** Admin only
-
-- `GET /api/song/featured`  
-  Get 6 random featured songs.  
-  **Auth:** Admin only
-
-- `GET /api/song/made-for-you`  
-  Get 4 random songs for "Made For You".  
-  **Auth:** Admin only
-
-- `GET /api/song/trendding`  
-  Get 4 trending songs.  
-  **Auth:** Admin only
-
-### Album
-
-- `GET /api/album/`  
-  Get all albums.
-
-- `GET /api/album/:albumId`  
-  Get album by ID (with songs populated).
-
-### Stats
-
-- `GET /api/stats/`  
-  Get stats: total users, songs, albums, unique artists.  
-  **Auth:** Admin only
+Visit [http://localhost:3000](http://localhost:3000) to start! 🎉
 
 ---
 
-## Notes
-
-- All protected routes require a valid Clerk JWT in the `Authorization` header.
-- Admin routes require the user to have the email specified in `Admin_Email`.
-- File uploads (songs/images) are handled via Cloudinary.
-
----
-
-## Running the Application
-
-1. **Install dependencies** in both `Backend` and `Frontend/Spotify` folders.
-2. **Set up environment variables** as described above.
-3. **Start the backend**:  
-   ```
-   cd Backend
-   npm install
-   npm run seed:song   # (optional) Seed songs
-   node src/index.js
-   ```
-4. **Start the frontend**:  
-   ```
-   cd Frontend/Spotify
-   npm install
-   npm run dev
-   ```
-5. Visit [http://localhost:3000](http://localhost:3000) to use the app.
-
+<div align="center">
+  <sub>Built with ❤️ for music lovers</sub>
+</div>
