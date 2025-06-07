@@ -5,7 +5,7 @@ import { create } from 'zustand';
 import { io } from 'socket.io-client';
 
 interface ChatStore {
-    users: any[],
+    users: User[],
     fetchUsers: () => Promise<void>,
     isLoading: boolean,
     error: string | null,
@@ -37,7 +37,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     users: [],
     isLoading: false,
     error: null,
-    socket: null,
+    socket: socket,
     isConnected: false,
     onlineUsers: new Set(),
     userActivities: new Map(),
@@ -69,7 +69,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
             socket.connect();
             socket.emit('user_connected', userId)
 
-            socket.emit('user_online', (users: string[]) => {
+            socket.on('users_online', (users: string[]) => {
                 set({ onlineUsers: new Set(users) })
             })
 

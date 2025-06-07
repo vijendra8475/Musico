@@ -7,14 +7,14 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import TrendingSection from "./components/TrendingSection";
 
 const HomePage = () => {
-  const { featuredSongs, madeForYouSongs, trendingSongs, fetchMadeForYouSongs, fetchTrendingSongs, fetchFeaturedSongs } = useMusicStore();
+  const { fetchMadeForYouSongs, fetchTrendingSongs, fetchFeaturedSongs } = useMusicStore();
 
 
   useEffect(() => {
    fetchFeaturedSongs(),
    fetchMadeForYouSongs(),
    fetchTrendingSongs()
-  }, [fetchFeaturedSongs, fetchMadeForYouSongs, fetchTrendingSongs]);
+  }, []);
  
   
 

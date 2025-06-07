@@ -10,7 +10,7 @@ export const authUser = async (req, res) => {
       if(!user) {
         await User.create({
           clerkId: id,
-          name: `${firstName} ${lastName}`,
+          name: `${firstName || ''} ${lastName || ''}`.trim(),
           imageUrl: imageUrl,
         });
       }
