@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-		"start": "node src/index.js",
-		"seed:songs": "node src/seeds/songs.js",
-		"seed:albums": "node src/seeds/albums.js"
+    "start": "node src/index.js",
+    "seed:songs": "node src/seeds/songs.js",
+    "seed:albums": "node src/seeds/albums.js"
   },
   "keywords": [],
   "author": "vijendra8475",
@@ -21,6 +21,7 @@
     "express": "^5.1.0",
     "express-fileupload": "^1.5.1",
     "mongoose": "^8.14.0",
+    "musico": "file:..",
     "node-cron": "^4.1.0",
     "nodemon": "^3.1.10",
     "socket.io": "^4.8.1",
