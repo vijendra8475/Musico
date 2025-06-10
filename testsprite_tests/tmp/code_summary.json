@@ -1,0 +1,194 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "React (Vite)",
+    "Express.js",
+    "MongoDB (Mongoose)",
+    "Socket.IO",
+    "Clerk",
+    "Cloudinary",
+    "Tailwind CSS",
+    "Zustand",
+    "Node-Cron"
+  ],
+  "features": [
+    {
+      "name": "Auth",
+      "description": "Handle OAuth callback and authenticate a user via Clerk.",
+      "files": [
+        "Backend/src/routes/auth.routes.js",
+        "Backend/src/controller/auth.controller.js"
+      ],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {"title": "Auth API", "version": "1.0.0"},
+        "servers": [{"url": "http://localhost:5000"}],
+        "paths": {
+          "/api/auth/callback": {
+            "post": {
+              "summary": "OAuth callback",
+              "responses": {
+                "200": {"description": "Authenticated successfully"},
+                "400": {"description": "Invalid callback payload"}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Users",
+      "description": "List users and fetch chat messages with a specific user. Protected by Clerk.",
+      "files": [
+        "Backend/src/routes/user.routes.js",
+        "Backend/src/controller/user.controller.js",
+        "Backend/src/middleware/auth.middleware.js"
+      ],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {"title": "Users API", "version": "1.0.0"},
+        "servers": [{"url": "http://localhost:5000"}],
+        "components": {
+          "securitySchemes": {
+            "bearerAuth": {"type": "http", "scheme": "bearer"}
+          }
+        },
+        "security": [{"bearerAuth": []}],
+        "paths": {
+          "/api/users": {
+            "get": {
+              "summary": "Get all users",
+              "responses": {"200": {"description": "List of users"}, "401": {"description": "Unauthorized"}}
+            }
+          },
+          "/api/users/messages/{userId}": {
+            "get": {
+              "summary": "Get messages with a user",
+              "parameters": [{"name": "userId", "in": "path", "required": true, "schema": {"type": "string"}}],
+              "responses": {"200": {"description": "Messages"}, "401": {"description": "Unauthorized"}}
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Admin",
+      "description": "Admin-only operations to manage songs and albums. Requires admin role.",
+      "files": [
+        "Backend/src/routes/admin.routes.js",
+        "Backend/src/controller/admin.controller.js",
+        "Backend/src/middleware/auth.middleware.js"
+      ],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {"title": "Admin API", "version": "1.0.0"},
+        "servers": [{"url": "http://localhost:5000"}],
+        "components": {
+          "securitySchemes": {
+            "bearerAuth": {"type": "http", "scheme": "bearer"}
+          }
+        },
+        "security": [{"bearerAuth": []}],
+        "paths": {
+          "/api/admin/check": {
+            "get": {"summary": "Check admin status", "responses": {"200": {"description": "Is admin"}, "401": {"description": "Unauthorized"}}}
+          },
+          "/api/admin/song": {
+            "post": {"summary": "Create a song", "responses": {"201": {"description": "Song created"}, "400": {"description": "Bad request"}, "401": {"description": "Unauthorized"}}}
+          },
+          "/api/admin/song/{id}": {
+            "delete": {"summary": "Delete a song", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Deleted"}, "404": {"description": "Not found"}}}
+          },
+          "/api/admin/album": {
+            "post": {"summary": "Create an album", "responses": {"201": {"description": "Album created"}, "400": {"description": "Bad request"}}}
+          },
+          "/api/admin/album/{id}": {
+            "delete": {"summary": "Delete an album", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Deleted"}, "404": {"description": "Not found"}}}
+          }
+        }
+      }
+    },
+    {
+      "name": "Songs",
+      "description": "Get all songs (admin-only) and public song discovery endpoints.",
+      "files": [
+        "Backend/src/routes/song.routes.js",
+        "Backend/src/controller/song.controller.js",
+        "Backend/src/middleware/auth.middleware.js"
+      ],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {"title": "Songs API", "version": "1.0.0"},
+        "servers": [{"url": "http://localhost:5000"}],
+        "components": {
+          "securitySchemes": {
+            "bearerAuth": {"type": "http", "scheme": "bearer"}
+          }
+        },
+        "paths": {
+          "/api/song": {
+            "get": {
+              "summary": "Get all songs (admin)",
+              "security": [{"bearerAuth": []}],
+              "responses": {"200": {"description": "List of songs"}, "401": {"description": "Unauthorized"}}
+            }
+          },
+          "/api/song/featured": {"get": {"summary": "Get featured song", "responses": {"200": {"description": "Featured"}}}},
+          "/api/song/made-for-you": {"get": {"summary": "Get made for you list", "responses": {"200": {"description": "List"}}}},
+          "/api/song/trending": {"get": {"summary": "Get trending songs", "responses": {"200": {"description": "List"}}}}
+        }
+      }
+    },
+    {
+      "name": "Albums",
+      "description": "Get all albums and album details.",
+      "files": [
+        "Backend/src/routes/album.routes.js",
+        "Backend/src/controller/album.controller.js"
+      ],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {"title": "Albums API", "version": "1.0.0"},
+        "servers": [{"url": "http://localhost:5000"}],
+        "paths": {
+          "/api/album": {"get": {"summary": "Get all albums", "responses": {"200": {"description": "List of albums"}}}},
+          "/api/album/{albumId}": {
+            "get": {
+              "summary": "Get album by id",
+              "parameters": [{"name": "albumId", "in": "path", "required": true, "schema": {"type": "string"}}],
+              "responses": {"200": {"description": "Album"}, "404": {"description": "Not found"}}
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Stats",
+      "description": "Admin-only stats endpoint.",
+      "files": [
+        "Backend/src/routes/stats.routes.js",
+        "Backend/src/controller/stats.controller.js",
+        "Backend/src/middleware/auth.middleware.js"
+      ],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {"title": "Stats API", "version": "1.0.0"},
+        "servers": [{"url": "http://localhost:5000"}],
+        "components": {
+          "securitySchemes": {
+            "bearerAuth": {"type": "http", "scheme": "bearer"}
+          }
+        },
+        "security": [{"bearerAuth": []}],
+        "paths": {
+          "/api/stats": {
+            "get": {
+              "summary": "Get statistics",
+              "responses": {"200": {"description": "Stats"}, "401": {"description": "Unauthorized"}}
+            }
+          }
+        }
+      }
+    }
+  ]
+}
