@@ -1,21 +1,13 @@
 {
-  "name": "spotify",
-  "version": "1.0.0",
-  "description": "<div align=\"center\">\r   <img src=\"https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB\" />\r   <img src=\"https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white\" />\r   <img src=\"https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white\" />\r   <img src=\"https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white\" />\r </div>",
-  "main": "index.js",
-  "scripts": {
-    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+	"name": "musico",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
 		"start": "npm start --prefix backend"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vijendra8475/Musico.git"
-  },
-  "keywords": [],
-  "author": "Vijendra",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/vijendra8475/Musico/issues"
-  },
-  "homepage": "https://github.com/vijendra8475/Musico#readme"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
 }
