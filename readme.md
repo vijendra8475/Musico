@@ -1,4 +1,4 @@
-# 🎵 Spotify Clone – Full Stack Application
+# 🎵 Musico – Full Stack Application
 
 <div align="center">
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
