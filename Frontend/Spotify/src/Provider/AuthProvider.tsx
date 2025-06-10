@@ -17,7 +17,7 @@ export const AuthProvider = ({children} : { children : React.ReactNode}) => {
     const { getToken, userId } = useAuth()
     const [loading, setLoading] = useState(true);
     const { checkAdminStatus } = useAuthStore()
-    const { initlizeSocket, disconnectSocket }= useChatStore()
+    const { initSocket, disconnectSocket }= useChatStore()
 
     useEffect(() => {
       const initAuth = async () => {
@@ -27,7 +27,7 @@ export const AuthProvider = ({children} : { children : React.ReactNode}) => {
             if(token) {
                 await checkAdminStatus();
                 // init socket
-                if(userId) initlizeSocket(userId);
+                if(userId) initSocket(userId);
             }
         } catch (error:any) {
             console.log("Error fetching token:", error);
@@ -41,7 +41,7 @@ export const AuthProvider = ({children} : { children : React.ReactNode}) => {
 
       //clean up
       return () => disconnectSocket()
-    }, [getToken, userId, checkAdminStatus, initlizeSocket, disconnectSocket])
+    }, [getToken, userId, checkAdminStatus, initSocket, disconnectSocket])
 
     if(loading) return <div className="h-screen w-full flex items-center justify-center">
         <Loader  className="size-8 text-emerald-500 animate-spin"/>

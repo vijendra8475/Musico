@@ -14,6 +14,8 @@ export const getAllUsers = async (req, res) => {
         res.status(200).json({users});
 
     } catch (error) {
+        console.log('not getting uses');
+        
         next(error);
     }
 }
@@ -32,6 +34,8 @@ export const getMessages = async(req, res, next) => {
 
         res.status(200).json(messages)
     } catch (error) {
+        console.log('not getting messages');
+        
         next(error)
     }
 }

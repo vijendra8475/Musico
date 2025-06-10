@@ -7,14 +7,13 @@ import { HeadphonesIcon, Music, User } from "lucide-react";
 import { useEffect } from "react";
 
 const FriendsActivity = () => {
-  const { users, fetchUsers } = useChatStore();
+  const { users, fetchUsers, onlineUsers, userActivities } = useChatStore();
   const { user } = useUser();
-  const isPlaying = true; // Placeholder for actual playing state
+  // const isPlaying = false; // Placeholder for actual playing state
 
   useEffect(() => {
     if (user) {
       fetchUsers();
-      console.log(users);
     }
   }, [fetchUsers, user]);
 
@@ -31,54 +30,63 @@ const FriendsActivity = () => {
 
       <ScrollArea className='flex-1'>
         <div className='space-y-4 p-4'>
-          {users.map((user) => (
-            <div
-              key={user._id}
-              className='cursor-pointer p-3 group hover:bg-zinc-800/50 rounded-md transition-colors group'>
-              <div className='flex items-start gap-3'>
-                <div className='relative'>
-                  <Avatar className='size-10 border border-zinc-800'>
-                    <AvatarImage
-                      src={user.imageUrl}
-                      alt={user.name}
-                      className='rounded-full size-10'
-                      loading='lazy'
-                    />
-                    <AvatarFallback>{user.name}</AvatarFallback>
-                  </Avatar>
+          {users.map((user) => {
+            const activity = userActivities.get(user.clerkId);
+            console.log(activity);
+            
+            const isPlaying = activity && activity !== 'Idle';
 
-                  <div
-                    className={
-                      "absolute bottom-6 right-1 h-3 w-3 border-2 rounded-full border-zinc-800  bg-zinc-500"
+            return (
+              <div
+                key={user._id}
+                className='cursor-pointer p-3 group hover:bg-zinc-800/50 rounded-md transition-colors group'>
+                <div className='flex items-start gap-3'>
+                  <div className='relative'>
+                    <Avatar className='size-10 border border-zinc-800'>
+                      <AvatarImage
+                        src={user.imageUrl}
+                        alt={user.name}
+                        className='rounded-full size-10'
+                        loading='lazy'
+                      />
+                      <AvatarFallback>{user.name}</AvatarFallback>
+                    </Avatar>
+
+                    <div
+                      className={
+                        `absolute bottom-6 right-1 h-3 w-3 border-2 rounded-full border-zinc-800  ${onlineUsers.has(user.clerkId) ? "bg-green-500" : "bg-zinc-500"}`
                     }
-                    aria-hidden='true'
+                    // aria-hidden='true'
                   />
-                </div>
-
-                <div className='flex-1 min-w-0 '>
-                  <div className='flex items-center gap-2'>
-                    <span className='font-medium text-small text-white'>
-                      {user.name.split(' ')[0]}
-                    </span>
-                    {isPlaying && <Music className='size-4 text-emerald-400' />}
                   </div>
 
-                  {isPlaying ? (
-                    <div className='mt-1'>
-                      <div className='mt-1 text-sm text-white font-medium truncate'>
-                        Perfect
-                      </div>
-                      <div className='text-xs text-zinc-400 truncate'>
-                        by ED Sheeran...
-                      </div>
+                  <div className='flex-1 min-w-0 '>
+                    <div className='flex items-center gap-2'>
+                      <span className='font-medium text-small text-white'>
+                        {user.name.split(' ')[0]}
+                      </span>
+                      {isPlaying && <Music className='size-4 text-emerald-400' />}
                     </div>
-                  ) : (
-                    <div className='mt-1 text-xs text-zinc-400'>Idle</div>
-                  )}
+
+                    {isPlaying ? (
+                      <div className='mt-1'>
+                        <div className='mt-1 text-sm text-white font-medium truncate'>
+                          {activity.replace('Playing ','').split(' by ')[0]}
+                        </div>
+                        <div className='text-xs text-zinc-400 truncate'>
+                          {
+                            activity.split(' by ')[1]
+                          }
+                        </div>
+                      </div>
+                    ) : (
+                      <div className='mt-1 text-xs text-zinc-400'>Idle</div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </ScrollArea>
     </div>

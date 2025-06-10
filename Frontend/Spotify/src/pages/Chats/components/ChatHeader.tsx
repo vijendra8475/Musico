@@ -7,11 +7,11 @@ const ChatHeader = () => {
 	if (!selectedUser) return null;
 
 	return (
-		<div className='p-4 border-b border-zinc-800'>
+		<div className='p-4 py-2 border-b border-zinc-800'>
 			<div className='flex items-center gap-3'>
 				<Avatar>
 					<AvatarImage src={selectedUser.imageUrl} />
-					<AvatarFallback>{selectedUser.name[0]}</AvatarFallback>
+					<AvatarFallback>{selectedUser.name.split(' '[0])}</AvatarFallback>
 				</Avatar>
 				<div>
 					<h2 className='font-medium'>{selectedUser.name}</h2>

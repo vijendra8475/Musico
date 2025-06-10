@@ -31,7 +31,7 @@ const MainLayout = () => {
         </ResizablePanel>
         <ResizableHandle className="w-2 bg-black rounded-lg transition-colors" />
 
-        <ResizablePanel defaultSize={isMobile ? 80 : 70} >
+        <ResizablePanel defaultSize={isMobile ? 80 : 70} minSize={60} maxSize={90} >
           <div className="h-full overflow-y-auto hide-scrollbar">
             <Outlet />
           </div>

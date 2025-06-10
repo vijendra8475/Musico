@@ -16,7 +16,7 @@ export const MessageInput = () => {
 		setNewMessage("");
 	};
   return (
-    <div className='p-4 mt-auto relative bottom-3 border-t border-zinc-800'>
+    <div className='p-4 mt-auto border-t border-zinc-800'>
 			<div className='flex gap-2'>
 				<Input
 					placeholder='Type a message'

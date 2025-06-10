@@ -27,15 +27,17 @@ const Chats = () => {
 
   useEffect(() => {
     if (selectedUser) fetchMessages(selectedUser.clerkId)
-  }, [selectedUser, fetchMessages])
-
+      
+      console.log(messages);
+    }, [selectedUser, fetchMessages])
+    
 
 
   return (
     <main className='h-full rounded-lg bg-gradient-to-b from-zinc-800 to-zinc-900 overflow-hidden'>
       <Topbar />
 
-      <div className='grid lg:grid-cols-[250px_1fr] grid-cols-[80px_1fr] h-[calc(100vh-180px)]'>
+      <div className='grid lg:grid-cols-[250px_1fr] grid-cols-[80px_1fr] h-[calc(100vh-200px)]'>
         <UsersList />
 
         {/* chat message */}
@@ -45,7 +47,7 @@ const Chats = () => {
               <ChatHeader />
 
               {/* Messages */}
-              <ScrollArea className="h-[cals(100vh-440px)]" >
+              <ScrollArea className="h-[calc(100vh-350px)]" >
                 <div className="flex flex-col gap-2">
                   {
                     messages.map(message => (
