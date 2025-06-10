@@ -43,6 +43,7 @@ export const AddSongDialog = () => {
         try {
             if(!files.audio || !files.image) {
                 toast.error('Upload both audio and video file')
+                return;
             }
             const formData = new FormData()
 
@@ -55,7 +56,7 @@ export const AddSongDialog = () => {
             }
 
             formData.append('imageFile', files.image)
-            formData.append('audioFile' ,files.audio)
+            formData.append('audioFile', files.audio)
 
             await axiosInstance.post('/admin/song', formData, {
                 headers : {
