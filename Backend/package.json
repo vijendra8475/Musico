@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed:song" : "node src/seeds/songs.js"
+    "seed:song": "node src/seeds/songs.js"
   },
   "keywords": [],
   "author": "vijendra8475",
@@ -19,7 +21,9 @@
     "express": "^5.1.0",
     "express-fileupload": "^1.5.1",
     "mongoose": "^8.14.0",
+    "node-cron": "^4.1.0",
     "nodemon": "^3.1.10",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "spotify": "file:.."
   }
 }
