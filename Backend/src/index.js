@@ -42,7 +42,7 @@ app.use(
         tempFileDir: path.join(__dirName, 'temp'),
         createParentPath: true,
         limits: {
-            fileSize: 10 * 1024 * 1024 // 50 MB
+            fileSize: 10 * 1024 * 1024 // 10 MB
         }
     }))
 
