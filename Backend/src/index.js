@@ -22,10 +22,10 @@ dotenv.config();
 
 const __dirname = path.resolve();
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 const httpServer = createServer(app);
-initializeSocket(httpServer);
+initilizeSocket(httpServer);
 
 app.use(
 	cors({
@@ -37,7 +37,7 @@ app.use(
 app.use(express.json()); // to parse req.body
 app.use(clerkMiddleware()); // this will add auth to req obj => req.auth
 app.use(
-	fileUpload({
+	fileupload({
 		useTempFiles: true,
 		tempFileDir: path.join(__dirname, "tmp"),
 		createParentPath: true,
