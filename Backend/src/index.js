@@ -20,35 +20,35 @@ import statsRoutes from './routes/stats.routes.js';
 
 dotenv.config();
 
-const __dirName = path.resolve();
+const __dirname = path.resolve();
 const app = express();
 const PORT = process.env.PORT;
 
-const httpServer = createServer(app)
-initilizeSocket(httpServer)
-
-app.use(cors({
-    origin: process.env.NODE_ENV === 'production' ? 'https://musico-7.onrender.com' : 'http://localhost:3000',
-    credentials: true
-}));
-
-app.use(express.json());
-app.use(clerkMiddleware()); // This will addauth to request object => req.auth
-
+const httpServer = createServer(app);
+initializeSocket(httpServer);
 
 app.use(
-    fileupload({
-        useTempFiles: true,
-        tempFileDir: path.join(__dirName, 'temp'),
-        createParentPath: true,
-        limits: {
-            fileSize: 10 * 1024 * 1024 // 10 MB
-        }
-    }))
+	cors({
+		origin: "http://localhost:3000",
+		credentials: true,
+	})
+);
 
+app.use(express.json()); // to parse req.body
+app.use(clerkMiddleware()); // this will add auth to req obj => req.auth
+app.use(
+	fileUpload({
+		useTempFiles: true,
+		tempFileDir: path.join(__dirname, "tmp"),
+		createParentPath: true,
+		limits: {
+			fileSize: 10 * 1024 * 1024, // 10MB  max file size
+		},
+	})
+);
 
 // cron jobs
-const tempDir = path.join(process.cwd(), "temp");
+const tempDir = path.join(process.cwd(), "tmp");
 cron.schedule("0 * * * *", () => {
 	if (fs.existsSync(tempDir)) {
 		fs.readdir(tempDir, (err, files) => {
@@ -63,7 +63,6 @@ cron.schedule("0 * * * *", () => {
 	}
 });
 
-
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
@@ -73,23 +72,18 @@ app.use('/api/stats', statsRoutes);
 
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirName, "../frontend/dist")));
-    app.get("*", (req, res) => {
-        res.sendFile(path.resolve(__dirName, "../frontend", "dist", "index.html"));
-    });
+	app.use(express.static(path.join(__dirname, "../frontend/dist")));
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
+	});
 }
 
-
+// error handler
 app.use((err, req, res, next) => {
-    res.status(500).json({
-        message: process.env.NODE_ENV === 'production' ? 'Internal Server Error in index.js' : err.message,
-    });
-})
-
-httpServer.listen(PORT, () => {
-    console.log('Server is running on port ' + PORT);
-    connectDB();
-    console.log(`Server is running on http://localhost:${PORT}`);
+	res.status(500).json({ message: process.env.NODE_ENV === "production" ? "Internal server error" : err.message });
 });
 
-// socket.io
+httpServer.listen(PORT, () => {
+	console.log("Server is running on port " + PORT);
+	connectDB();
+});
