@@ -92,7 +92,7 @@ VITE_CLERK_PUBLISHABLE_KEY=your_clerk_key
 
 ### 🎵 Music
 - `GET /api/song/featured` - Get featured songs
-- `GET /api/song/trendding` - Get trending songs
+- `GET /api/song/trending` - Get trending songs
 - `GET /api/album/:albumId` - Get album details
 
 ## 🚀 Quick Start
