@@ -28,7 +28,7 @@ const httpServer = createServer(app)
 initilizeSocket(httpServer)
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.NODE_ENV === 'production' ? 'https://musico-7.onrender.com' : 'http://localhost:3000',
     credentials: true
 }));
 
